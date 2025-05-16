@@ -61,23 +61,12 @@ export function RadarChart({ data }: RadarChartProps) {
             r: {
               angleLines: {
                 display: true,
-                color: "rgba(0, 0, 0, 0.1)",
-              },
-              grid: {
-                color: "rgba(0, 0, 0, 0.1)",
               },
               suggestedMin: 0,
               suggestedMax: 100,
               ticks: {
                 stepSize: 20,
                 callback: (value) => value + "%",
-                color: "rgba(0, 0, 0, 0.6)",
-              },
-              pointLabels: {
-                color: "rgba(0, 0, 0, 0.8)",
-                font: {
-                  size: 11,
-                },
               },
             },
           },
@@ -88,13 +77,6 @@ export function RadarChart({ data }: RadarChartProps) {
             tooltip: {
               callbacks: {
                 label: (context) => `${context.dataset.label}: ${context.raw}%`,
-              },
-              backgroundColor: "rgba(0, 0, 0, 0.7)",
-              titleFont: {
-                size: 13,
-              },
-              bodyFont: {
-                size: 12,
               },
             },
           },

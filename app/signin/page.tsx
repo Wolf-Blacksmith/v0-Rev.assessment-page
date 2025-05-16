@@ -27,16 +27,12 @@ export default function SignInPage() {
 
     try {
       await signIn(email, password)
-      // Only show success toast if no error occurred
-      if (!error) {
-        toast({
-          title: "Sign in successful",
-          description: "Welcome back to RevAssess!",
-        })
-      }
+      toast({
+        title: "Sign in successful",
+        description: "Welcome back to RevAssess!",
+      })
     } catch (err) {
       // Error is handled by the auth context
-      // No need to do anything here as the error state will be updated in the context
     }
   }
 

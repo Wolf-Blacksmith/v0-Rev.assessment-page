@@ -5,26 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Navbar } from "@/components/navbar"
 import { useAuth } from "@/lib/auth-context"
-import { BookOpen, Brain, BarChart, ArrowRight, Calendar } from "lucide-react"
-import { archetypes } from "@/data/archetypes"
-import { Badge } from "@/components/ui/badge"
+import { BookOpen, Brain, BarChart, ArrowRight } from "lucide-react"
 
 export default function DashboardPage() {
   const { user } = useAuth()
-
-  // Format date
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).format(new Date(date))
-  }
-
-  // Get recent assessment results
-  const recentResults = user?.assessmentResults
-    ? [...user.assessmentResults].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3)
-    : []
 
   if (!user) {
     return (
@@ -83,15 +67,8 @@ export default function DashboardPage() {
               <p className="text-center text-muted-foreground mb-6">
                 Review your assessment results and track your progress over time.
               </p>
-              <Button
-                variant={recentResults.length > 0 ? "default" : "outline"}
-                className="w-full"
-                asChild
-                disabled={recentResults.length === 0}
-              >
-                <Link href={recentResults.length > 0 ? "/profile?tab=assessment" : "#"}>
-                  {recentResults.length > 0 ? "View Results" : "No Results Yet"}
-                </Link>
+              <Button variant="outline" className="w-full" disabled>
+                No Results Yet
               </Button>
             </CardContent>
           </Card>
@@ -123,61 +100,15 @@ export default function DashboardPage() {
               <CardDescription>Track your progress and achievements</CardDescription>
             </CardHeader>
             <CardContent>
-              {recentResults.length > 0 ? (
-                <div className="space-y-4">
-                  {recentResults.map((result) => {
-                    const primaryArchetype = archetypes[result.primaryArchetype]
-                    return (
-                      <div
-                        key={result.id}
-                        className="flex items-center border rounded-lg p-4 hover:bg-muted/50 transition-colors"
-                      >
-                        <div
-                          className={`w-10 h-10 rounded-full bg-${primaryArchetype?.color || "blue"}-100 flex items-center justify-center mr-4`}
-                        >
-                          <BarChart className={`h-5 w-5 text-${primaryArchetype?.color || "blue"}-500`} />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex justify-between items-center">
-                            <h4 className="font-medium">{primaryArchetype?.title || "Assessment Result"}</h4>
-                            <Badge variant="outline">
-                              {result.archetypeScores.find((score) => score.id === result.primaryArchetype)?.match || 0}
-                              % Match
-                            </Badge>
-                          </div>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            {formatDate(result.date)}
-                          </div>
-                        </div>
-                        <Button variant="ghost" size="sm" asChild>
-                          <Link href={`/results/history/${result.id}`}>
-                            <ArrowRight className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </div>
-                    )
-                  })}
-
-                  <div className="text-center mt-4">
-                    <Link href="/profile?tab=assessment">
-                      <Button variant="outline" size="sm">
-                        View All Results
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground mb-4">You haven't taken any assessments yet.</p>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    Complete your first assessment to start your learning journey.
-                  </p>
-                  <Button asChild>
-                    <Link href="/assessment">Take Assessment Now</Link>
-                  </Button>
-                </div>
-              )}
+              <div className="text-center py-8">
+                <p className="text-muted-foreground mb-4">You haven't taken any assessments yet.</p>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Complete your first assessment to start your learning journey.
+                </p>
+                <Button asChild>
+                  <Link href="/assessment">Take Assessment Now</Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
 

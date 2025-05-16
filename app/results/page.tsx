@@ -29,68 +29,6 @@ interface AssessmentResult {
   archetypeScores: ArchetypeScore[]
 }
 
-// Add this function before the ResultsPage component
-function getDimensionColors(dimension: string): { positive: string; negative: string } {
-  // Map dimensions to color schemes
-  const colorMap: Record<string, { positive: string; negative: string }> = {
-    "Self-Regulation vs. Impulsivity": {
-      positive: "bg-green-100 text-green-800 border-green-200",
-      negative: "bg-red-100 text-red-800 border-red-200",
-    },
-    "Time Management vs. Time Urgency": {
-      positive: "bg-blue-100 text-blue-800 border-blue-200",
-      negative: "bg-orange-100 text-orange-800 border-orange-200",
-    },
-    "Task Management vs. Task Reactivity": {
-      positive: "bg-indigo-100 text-indigo-800 border-indigo-200",
-      negative: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    },
-    "Metacognitive Monitoring vs. Blind Execution": {
-      positive: "bg-purple-100 text-purple-800 border-purple-200",
-      negative: "bg-gray-100 text-gray-800 border-gray-200",
-    },
-    "Concentration vs. Distractibility": {
-      positive: "bg-teal-100 text-teal-800 border-teal-200",
-      negative: "bg-pink-100 text-pink-800 border-pink-200",
-    },
-    "Digital Literacy vs. Digital Overload": {
-      positive: "bg-cyan-100 text-cyan-800 border-cyan-200",
-      negative: "bg-red-100 text-red-800 border-red-200",
-    },
-    "Collaboration vs. Independence": {
-      positive: "bg-emerald-100 text-emerald-800 border-emerald-200",
-      negative: "bg-blue-100 text-blue-800 border-blue-200",
-    },
-    "Adaptability vs. Rigidity": {
-      positive: "bg-amber-100 text-amber-800 border-amber-200",
-      negative: "bg-slate-100 text-slate-800 border-slate-200",
-    },
-    "Structured Note-Taking vs. Unstructured Capture": {
-      positive: "bg-lime-100 text-lime-800 border-lime-200",
-      negative: "bg-gray-100 text-gray-800 border-gray-200",
-    },
-    "Retention vs. Cramming": {
-      positive: "bg-violet-100 text-violet-800 border-violet-200",
-      negative: "bg-orange-100 text-orange-800 border-orange-200",
-    },
-    "Critical Thinking vs. Surface Learning": {
-      positive: "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200",
-      negative: "bg-gray-100 text-gray-800 border-gray-200",
-    },
-    "Well-being Management vs. Burnout Vulnerability": {
-      positive: "bg-emerald-100 text-emerald-800 border-emerald-200",
-      negative: "bg-red-100 text-red-800 border-red-200",
-    },
-  }
-
-  return (
-    colorMap[dimension] || {
-      positive: "bg-gray-100 text-gray-800 border-gray-200",
-      negative: "bg-gray-100 text-gray-800 border-gray-200",
-    }
-  )
-}
-
 export default function ResultsPage() {
   const searchParams = useSearchParams()
   const dataParam = searchParams.get("data")
@@ -420,7 +358,6 @@ export default function ResultsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {results.dimensions.map((result, index) => {
                   const { positive, negative } = formatDimension(result.dimension)
-                  const colors = getDimensionColors(result.dimension)
                   return (
                     <Card key={index} className="border shadow-sm">
                       <CardHeader className="pb-2">
@@ -429,18 +366,11 @@ export default function ResultsPage() {
                       <CardContent>
                         <div className="mb-2">
                           <div className="flex justify-between mb-1">
-                            <span className={`text-sm font-medium px-2 py-1 rounded-md ${colors.negative}`}>
-                              {negative}
-                            </span>
-                            <span className={`text-sm font-medium px-2 py-1 rounded-md ${colors.positive}`}>
-                              {positive}
-                            </span>
+                            <span className="text-sm font-medium">{negative}</span>
+                            <span className="text-sm font-medium">{positive}</span>
                           </div>
-                          <div className="h-2 w-full bg-muted rounded-full overflow-hidden mt-2">
-                            <div
-                              className="h-full bg-gradient-to-r from-red-400 to-green-400"
-                              style={{ width: `${result.score}%` }}
-                            ></div>
+                          <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                            <div className="h-full bg-primary" style={{ width: `${result.score}%` }}></div>
                           </div>
                         </div>
                         <p className="text-sm text-muted-foreground mt-4">

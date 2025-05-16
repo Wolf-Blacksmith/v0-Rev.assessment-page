@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Navbar } from "@/components/navbar"
 import { BookOpen, Brain, BarChart } from "lucide-react"
-import { DemoModeBanner } from "@/components/demo-mode-banner"
 
 export default function HomePage() {
   return (
@@ -19,8 +18,6 @@ export default function HomePage() {
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        <DemoModeBanner />
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <Card className="archetype-card border-primary/20 hover:border-primary">
             <div className="archetype-card-header bg-primary/10">

@@ -13,7 +13,6 @@ import { Navbar } from "@/components/navbar"
 import { useAuth } from "@/lib/auth-context"
 import { useToast } from "@/components/ui/use-toast"
 import { Loader2 } from "lucide-react"
-import { AvatarSelector } from "@/components/avatar-selector"
 
 export default function ProfileSetupPage() {
   const { user, updateProfile, loading } = useAuth()
@@ -24,7 +23,6 @@ export default function ProfileSetupPage() {
   const [academicLevel, setAcademicLevel] = useState(user?.academicLevel || "")
   const [institution, setInstitution] = useState(user?.institution || "")
   const [fieldOfStudy, setFieldOfStudy] = useState(user?.fieldOfStudy || "")
-  const [profileImage, setProfileImage] = useState(user?.profileImage || null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,7 +33,6 @@ export default function ProfileSetupPage() {
         academicLevel,
         institution,
         fieldOfStudy,
-        profileImage,
       })
 
       toast({
@@ -53,10 +50,6 @@ export default function ProfileSetupPage() {
     }
   }
 
-  const handleAvatarChange = (avatarUrl: string) => {
-    setProfileImage(avatarUrl)
-  }
-
   return (
     <>
       <Navbar />
@@ -71,10 +64,6 @@ export default function ProfileSetupPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="flex justify-center mb-6">
-                  <AvatarSelector currentAvatar={profileImage} onAvatarChange={handleAvatarChange} name={name} />
-                </div>
-
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
