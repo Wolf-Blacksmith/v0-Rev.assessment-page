@@ -55,18 +55,29 @@ export function Navbar() {
                   <Avatar className="h-8 w-8">
                     <AvatarImage
                       src={user.profileImage || "/placeholder.svg?height=32&width=32"}
-                      alt={user.name || "User"}
+                      alt={user.displayName || user.name || "User"}
                     />
-                    <AvatarFallback>{user.name ? user.name[0].toUpperCase() : "U"}</AvatarFallback>
+                    <AvatarFallback>
+                      {user.displayName
+                        ? user.displayName[0].toUpperCase()
+                        : user.name
+                          ? user.name[0].toUpperCase()
+                          : user.email[0].toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <div className="px-2 py-1.5 text-sm font-medium">{user.displayName || user.name || user.email}</div>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/settings">Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}>Sign out</DropdownMenuItem>

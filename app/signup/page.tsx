@@ -23,14 +23,26 @@ export default function SignUpPage() {
   const { toast } = useToast()
 
   const validatePassword = () => {
+    if (!password) {
+      setPasswordError("Password is required")
+      return false
+    }
+
     if (password.length < 8) {
       setPasswordError("Password must be at least 8 characters long")
       return false
     }
+
+    if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+      setPasswordError("Password must contain both letters and numbers")
+      return false
+    }
+
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match")
       return false
     }
+
     setPasswordError("")
     return true
   }
@@ -38,7 +50,21 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter an email address",
+        variant: "destructive",
+      })
+      return
+    }
+
     if (!validatePassword()) {
+      toast({
+        title: "Error",
+        description: passwordError,
+        variant: "destructive",
+      })
       return
     }
 
@@ -48,8 +74,12 @@ export default function SignUpPage() {
         title: "Account created",
         description: "Your account has been created successfully!",
       })
-    } catch (err) {
-      // Error is handled by the auth context
+    } catch (err: any) {
+      toast({
+        title: "Sign up failed",
+        description: err.message || "An error occurred during sign up",
+        variant: "destructive",
+      })
     }
   }
 
@@ -67,7 +97,12 @@ export default function SignUpPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                {error && <div className="p-3 rounded-md bg-red-50 text-red-500 text-sm">{error}</div>}
+                {error && (
+                  <div className="p-3 rounded-md bg-red-50 text-red-500 text-sm">
+                    <p className="font-medium">Sign up failed</p>
+                    <p>{error}</p>
+                  </div>
+                )}
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -101,7 +136,15 @@ export default function SignUpPage() {
                       <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
                     </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground">Password must be at least 8 characters long</p>
+                  <div className="text-xs text-muted-foreground space-y-1">
+                    <p>Password requirements:</p>
+                    <ul className="list-disc pl-4">
+                      <li className={password.length >= 8 ? "text-green-500" : ""}>At least 8 characters long</li>
+                      <li className={/[A-Za-z]/.test(password) && /[0-9]/.test(password) ? "text-green-500" : ""}>
+                        Contains both letters and numbers
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="confirm-password">Confirm Password</Label>

@@ -25,14 +25,28 @@ export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (!email || !password) {
+      toast({
+        title: "Error",
+        description: "Please enter both email and password",
+        variant: "destructive",
+      })
+      return
+    }
+
     try {
       await signIn(email, password)
       toast({
         title: "Sign in successful",
         description: "Welcome back to RevAssess!",
       })
-    } catch (err) {
-      // Error is handled by the auth context
+    } catch (err: any) {
+      // Error is already set in the auth context
+      toast({
+        title: "Sign in failed",
+        description: err.message || "An error occurred during sign in",
+        variant: "destructive",
+      })
     }
   }
 
@@ -50,7 +64,12 @@ export default function SignInPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                {error && <div className="p-3 rounded-md bg-red-50 text-red-500 text-sm">{error}</div>}
+                {error && (
+                  <div className="p-3 rounded-md bg-red-50 text-red-500 text-sm">
+                    <p className="font-medium">Sign in failed</p>
+                    <p>{error}</p>
+                  </div>
+                )}
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input

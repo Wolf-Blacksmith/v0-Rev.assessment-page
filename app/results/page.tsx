@@ -1,6 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
+import { useEffect, useRef } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -10,6 +11,8 @@ import { archetypes } from "@/data/archetypes"
 import { RadarChart } from "@/components/radar-chart"
 import { Download, Share2, CheckCircle, AlertCircle, BookOpen, Users, Calendar, RefreshCw, Brain } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { useAuth } from "@/lib/auth-context"
+import { useToast } from "@/components/ui/use-toast"
 
 interface DimensionResult {
   dimension: string
@@ -32,6 +35,10 @@ interface AssessmentResult {
 export default function ResultsPage() {
   const searchParams = useSearchParams()
   const dataParam = searchParams.get("data")
+  const { saveAssessmentResult, user } = useAuth()
+  const { toast } = useToast()
+  // Use a ref to track if we've already saved this result
+  const resultSavedRef = useRef(false)
 
   let results: AssessmentResult = {
     dimensions: [],
@@ -46,6 +53,61 @@ export default function ResultsPage() {
     }
   } catch (error) {
     console.error("Failed to parse results data", error)
+  }
+
+  // Save the assessment result when component mounts, but only once
+  useEffect(() => {
+    // Only save if we have a user, results, and haven't saved yet
+    if (user && results.dimensions.length > 0 && !resultSavedRef.current) {
+      const resultToSave = {
+        date: new Date().toISOString(),
+        primaryArchetype: results.primaryArchetype,
+        secondaryArchetype: results.secondaryArchetype,
+        dimensions: results.dimensions,
+      }
+
+      // Mark as saved to prevent multiple saves
+      resultSavedRef.current = true
+
+      saveAssessmentResult(resultToSave).catch((err) => {
+        console.error("Failed to save assessment result", err)
+        // Reset the flag if saving fails
+        resultSavedRef.current = false
+      })
+    }
+  }, [user]) // Only depend on user, not on saveAssessmentResult or results
+
+  const handleDownload = () => {
+    // Create a blob with the results JSON
+    const blob = new Blob([JSON.stringify(results, null, 2)], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+
+    // Create temporary link element and trigger download
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `learning-assessment-${new Date().toISOString().split("T")[0]}.json`
+    document.body.appendChild(a)
+    a.click()
+
+    // Clean up
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+
+    toast({
+      title: "Downloaded Assessment Results",
+      description: "Your results have been saved to your device.",
+    })
+  }
+
+  const handleShare = () => {
+    // In a real app, this would generate a shareable link
+    // For now, we'll just copy the current URL to clipboard
+    navigator.clipboard.writeText(window.location.href)
+
+    toast({
+      title: "Link Copied",
+      description: "Assessment results link copied to clipboard!",
+    })
   }
 
   if (!results.dimensions.length) {
@@ -433,11 +495,11 @@ export default function ResultsPage() {
           </Card>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2" onClick={handleDownload}>
               <Download className="h-4 w-4" />
               Download Results
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2" onClick={handleShare}>
               <Share2 className="h-4 w-4" />
               Share Results
             </Button>
