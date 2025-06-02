@@ -143,25 +143,25 @@ export default function ResourcesPage() {
 
               <h2 className="text-2xl font-bold mb-6">Learning Archetypes</h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <Card className="border-blue-200 hover:border-blue-300">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                <Card className="border-blue-200 hover:border-blue-300 w-full">
                   <CardHeader className="pb-2">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-2">
-                      <Calendar className="h-5 w-5 text-blue-600" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                      <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                     </div>
-                    <CardTitle className="text-lg">The Organizer</CardTitle>
-                    <CardDescription>Structured, methodical, and detail-oriented</CardDescription>
+                    <CardTitle className="text-base sm:text-lg">The Organizer</CardTitle>
+                    <CardDescription className="text-xs sm:text-sm">Structured, methodical, and detail-oriented</CardDescription>
                   </CardHeader>
                   <CardContent className="pb-2">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       Excels at planning and structuring academic work with clear expectations and deadlines.
                     </p>
                   </CardContent>
                   <CardFooter>
-                    <Button variant="outline" size="sm" className="w-full" asChild>
+                    <Button variant="outline" size="sm" className="w-full text-xs sm:text-sm" asChild>
                       <Link href="/resources/archetypes/organizer">
                         <span>Learn More</span>
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                       </Link>
                     </Button>
                   </CardFooter>
@@ -323,25 +323,25 @@ export default function ResourcesPage() {
               {/* Archetypes content would go here */}
               <h2 className="text-2xl font-bold mb-6">Learning Archetypes</h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <Card className="border-blue-200 hover:border-blue-300">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                <Card className="border-blue-200 hover:border-blue-300 w-full">
                   <CardHeader className="pb-2">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-2">
-                      <Calendar className="h-5 w-5 text-blue-600" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                      <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                     </div>
-                    <CardTitle className="text-lg">The Organizer</CardTitle>
-                    <CardDescription>Structured, methodical, and detail-oriented</CardDescription>
+                    <CardTitle className="text-base sm:text-lg">The Organizer</CardTitle>
+                    <CardDescription className="text-xs sm:text-sm">Structured, methodical, and detail-oriented</CardDescription>
                   </CardHeader>
                   <CardContent className="pb-2">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       Excels at planning and structuring academic work with clear expectations and deadlines.
                     </p>
                   </CardContent>
                   <CardFooter>
-                    <Button variant="outline" size="sm" className="w-full" asChild>
+                    <Button variant="outline" size="sm" className="w-full text-xs sm:text-sm" asChild>
                       <Link href="/resources/archetypes/organizer">
                         <span>Learn More</span>
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                       </Link>
                     </Button>
                   </CardFooter>

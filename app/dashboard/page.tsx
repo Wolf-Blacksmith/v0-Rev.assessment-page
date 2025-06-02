@@ -114,42 +114,42 @@ export default function DashboardPage() {
 
           <h2 className="text-2xl font-bold mb-6">Recommended Resources</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <Card>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <Card className="w-full">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Study Habit Fundamentals</CardTitle>
-                <CardDescription>Essential strategies for academic success</CardDescription>
+                <CardTitle className="text-base sm:text-lg">Study Habit Fundamentals</CardTitle>
+                <CardDescription className="text-xs sm:text-sm">Essential strategies for academic success</CardDescription>
               </CardHeader>
               <CardContent className="pb-2">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   Learn the core principles of effective studying that apply to all learning styles.
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" size="sm" className="w-full" asChild>
+                <Button variant="outline" size="sm" className="w-full text-xs sm:text-sm" asChild>
                   <Link href="/resources/fundamentals">
                     <span>Explore</span>
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                   </Link>
                 </Button>
               </CardFooter>
             </Card>
 
-            <Card>
+            <Card className="w-full">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Learning Style Guide</CardTitle>
-                <CardDescription>Understanding the five learning archetypes</CardDescription>
+                <CardTitle className="text-base sm:text-lg">Learning Style Guide</CardTitle>
+                <CardDescription className="text-xs sm:text-sm">Understanding the five learning archetypes</CardDescription>
               </CardHeader>
               <CardContent className="pb-2">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   Explore the characteristics and strategies for each learning archetype.
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" size="sm" className="w-full" asChild>
+                <Button variant="outline" size="sm" className="w-full text-xs sm:text-sm" asChild>
                   <Link href="/resources/archetypes">
                     <span>Explore</span>
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                   </Link>
                 </Button>
               </CardFooter>
